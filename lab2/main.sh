@@ -26,7 +26,7 @@ EOF
 
 cat > "$LAB_DIR/instrucoes/bemvindo_urubu100.txt" << 'EOF'
 Ola! Voce foi adicionado ao time de infra.
-Sua primeira tarefa esta no diretorio /home/urubu100 apos seu acesso ser criado.
+Qualquer duvida, entre em contato com o setor de TI usando o ramal listado em ramais.txt.
 EOF
 
 cat > "$LAB_DIR/instrucoes/ramais.txt" << 'EOF'
