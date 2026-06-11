@@ -1,0 +1,12 @@
+[Unit]
+Description=ISO Lab %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/iso-labs/runner.sh %i
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
