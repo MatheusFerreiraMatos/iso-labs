@@ -1,47 +1,49 @@
 #!/bin/bash
-# lab3/main.sh — Gerenciamento de usuários e grupos (Squad de desenvolvimento)
-# O script apenas limpa resquícios de execuções anteriores.
-# O aluno deve executar os comandos para criar/modificar/remover.
+# lab3/main.sh — Gerenciamento de usuários
+# Narrativa: Tux configura acesso do novo colega urubu100
 
 SPTECH_HOME="/home/sptech"
-LAB_DIR="$SPTECH_HOME/lab3_equipe"
+LAB_DIR="$SPTECH_HOME/lab3_tux"
 
 section "Resetando ambiente do lab3"
 
-# Remove usuários e grupos que possam ter sobrado de rodadas anteriores
-for user in harry hermione ron draco crabbe goyle; do
-    if id "$user" &>/dev/null; then
-        userdel -r "$user" 2>/dev/null || true
-    fi
-done
+if id "urubu100" &>/dev/null; then
+  userdel -r urubu100 2>/dev/null || true
+fi
 
-for group in front-end back-end; do
-    if getent group "$group" &>/dev/null; then
-        groupdel "$group" 2>/dev/null || true
-    fi
-done
-
-# Cria diretório de trabalho com um arquivo de instruções rápido
 reset_dir "$LAB_DIR"
+mkdir -p "$LAB_DIR/instrucoes"
 
-cat > "$LAB_DIR/LEIA-ME.txt" << 'EOF'
-Missão: Gerenciar a equipe de desenvolvimento
-=============================================
-Siga as tarefas do questionário no Moodle.
-Todos os comandos devem ser executados com sudo (você tem permissão).
-Use os comandos:
-  adduser, addgroup, usermod, deluser (ou userdel), delgroup (ou groupdel)
-  su, exit, id, groups, ls /home, cat /etc/passwd
+section "Montando cenário"
 
-Bom trabalho!
+cat > "$LAB_DIR/checklist.txt" << 'EOF'
+Checklist de onboarding:
+[ ] Criar usuario
+[ ] Definir senha
+[ ] Criar diretorio de trabalho
+[ ] Verificar acesso
 EOF
 
-chmod 644 "$LAB_DIR/LEIA-ME.txt"
+cat > "$LAB_DIR/instrucoes/bemvindo_urubu100.txt" << 'EOF'
+Ola! Voce foi adicionado ao time de infra.
+Qualquer duvida, entre em contato com o setor de TI usando o ramal listado em ramais.txt.
+EOF
+
+cat > "$LAB_DIR/instrucoes/ramais.txt" << 'EOF'
+Ramal TI: 2001
+Ramal RH: 2002
+Ramal Financeiro: 2003
+EOF
+
+chmod 644 "$LAB_DIR/checklist.txt"
+chmod 644 "$LAB_DIR/instrucoes/bemvindo_urubu100.txt"
+chmod 644 "$LAB_DIR/instrucoes/ramais.txt"
+
 set_owner "$LAB_DIR"
 
 section "Concluído"
 echo ""
 echo "  Diretório base: $LAB_DIR"
-echo "  Ambiente limpo. Nenhum usuário/grupo pré-existente."
-echo "  Leia o arquivo LEIA-ME.txt e vá para o Moodle."
+echo ""
+echo "  Acesse com: cd ~/lab3_tux"
 echo ""
