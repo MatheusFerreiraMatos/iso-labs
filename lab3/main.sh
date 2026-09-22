@@ -8,7 +8,13 @@ LAB_DIR="$SPTECH_HOME/lab3_tux"
 section "Resetando ambiente do lab3"
 
 if id "urubu100" &>/dev/null; then
+  pkill -KILL -u urubu100 2>/dev/null || true
+  sleep 1
   userdel -r urubu100 2>/dev/null || true
+fi
+
+if id "urubu100" &>/dev/null; then
+  echo "  AVISO: urubu100 ainda existe. Saia da sessão dele (exit) e reinicie o lab."
 fi
 
 reset_dir "$LAB_DIR"
